@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  adaptation_engine:
+    build: 
+      context: ./adaptation_engine
+      dockerfile: Dockerfile
+    volumes:
+      - ./adaptation_engine:/app
+    environment:
+      - PYTHONPATH=/app
+    depends_on:
+      - telemetry_db
+
+  ai_engine:
+    build:
+      context: ./ai_engine
+      dockerfile: Dockerfile
+    volumes:
+      - ./ai_engine:/app
+    environment:
+      - PYTHONPATH=/app
+
+  cloud_integration:
+    build:
+      context: ./cloud_integration
+      dockerfile: Dockerfile
+    volumes:
+      - ./cloud_integration:/app
+    environment:
+      - PYTHONPATH=/app
+
+  core_engine:
+    build:
+      context: ./core_engine
+      dockerfile: Dockerfile
+    volumes:
+      - ./core_engine:/app
+    environment:
+      - PYTHONPATH=/app
+    depends_on:
+      - ai_engine
+      - adaptation_engine
+
+  telemetry_db:
+    image: postgres:14-alpine
+    environment:
+      - POSTGRES_USER=umi
+      - POSTGRES_PASSWORD=umipassword
+      - POSTGRES_DB=telemetry
+    volumes:
+      - telemetry_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  telemetry_data:

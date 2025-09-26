@@ -1,0 +1,70 @@
+{
+  "name": "umi-code",
+  "displayName": "Umi Code Assistant",
+  "version": "0.1.0",
+  "description": "Adaptive code assistant that learns from user preferences",
+  "publisher": "umi",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other",
+    "Programming Languages",
+    "Formatters"
+  ],
+  "activationEvents": [
+    "onLanguage:python",
+    "onLanguage:javascript",
+    "onLanguage:typescript"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "umi.suggest",
+        "title": "Umi: Get Code Suggestion"
+      },
+      {
+        "command": "umi.adapt",
+        "title": "Umi: Adapt Code Style"
+      }
+    ],
+    "configuration": {
+      "title": "Umi",
+      "properties": {
+        "umi.telemetryEnabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable telemetry collection for style adaptation"
+        },
+        "umi.codeStyle": {
+          "type": "object",
+          "default": {},
+          "description": "Custom code style preferences"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^20.4.5",
+    "@types/vscode": "^1.80.0",
+    "@typescript-eslint/eslint-plugin": "^6.2.0",
+    "@typescript-eslint/parser": "^6.2.0",
+    "eslint": "^8.45.0",
+    "glob": "^10.3.3",
+    "mocha": "^10.2.0",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "axios": "^1.4.0"
+  }
+}
